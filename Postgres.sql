@@ -1,5 +1,6 @@
 CREATE DATABASE ESCOLA;
-
+--No Pgadmim só há uma conexão com um database por vez, por isso 
+--não utilizei o comando USE ESCOLA.
 create table alunos (
 	id_aluno SERIAL PRIMARY KEY,
 	nome varchar(50) not null,
