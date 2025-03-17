@@ -1,0 +1,77 @@
+
+CREATE DATABASE LOJA;
+
+USE LOJA;
+
+
+--CREATE TABLE cliente
+(
+  id serial NOT NULL,
+  nome character(45) NOT NULL, 
+  telefoneFixo character(13), 
+  telefoneCelular character(13),
+  email character(40), 
+  sexo character(1) NOT NULL,
+  dataCadastro timestamp null,
+  dataAlteracao timestamp null,
+  CONSTRAINT cliente_pkey_id PRIMARY KEY (id)
+)
+
+
+
+--Inserindo valores na tabela
+ INSERT INTO 
+  cliente(nome, telefonefixo, telefonecelular, email, sexo)
+    VALUES ('Nome 01', '92929292', '91919191','meu@email.com', 'M');
+
+  INSERT INTO 
+  cliente(nome, telefonefixo, telefonecelular, email, sexo)
+    VALUES ('Nome 02', '92929292', '91919191','meu@email.com', 'M');
+
+  INSERT INTO 
+  cliente(nome, telefonefixo, telefonecelular, email, sexo)
+    VALUES ('Nome 03', '92929292', '91919191','meu@email.com', 'M');
+
+  INSERT INTO 
+  cliente(nome, telefonefixo, telefonecelular, email, sexo)
+    VALUES ('Nome 04', '92929292', '91919191','meu@email.com', 'M');
+
+--Criação da função que será chamada no trigger criado
+CREATE OR REPLACE FUNCTION data_cadastro() 
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.dataCadastro = now();
+    RETURN NEW; 
+END;
+$$ language 'plpgsql';
+
+--Criação da trigger
+CREATE TRIGGER data_cadastro_novo_cliente
+BEFORE INSERT
+ON cliente
+FOR EACH ROW
+EXECUTE PROCEDURE data_cadastro()
+
+--tabela cliente selecionada com os registros sem trigger acionado criada:
+
+SELECT * FROM cliente;
+
+--iNSERINDO NOVOS DADOS NA TABELA
+
+INSERT INTO cliente
+ (nome,telefonefixo,telefonecelular,email,sexo)
+VALUES
+('Nome 05','22222222','999998888','meu@email.com','F');
+
+
+--Tabela com o trigger em funcionamento:
+
+SELECT *FROM cliente
+
+
+
+
+
+
+
+
