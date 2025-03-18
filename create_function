@@ -1,0 +1,27 @@
+--Criação da tabela
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100),
+    email VARCHAR(100),
+    data_cadastro DATE DEFAULT CURRENT_DATE
+);
+
+
+
+--Criação da function
+
+CREATE FUNCTION total_clientes_dia(data_consulta DATA DEFAULT CURRENT_DATE)
+RETURNS INT
+LANGUAGE 'plpgsql'
+AS $$
+DECLARE 
+total INT;
+BEGIN
+    SELECT COUNT(*) INTO FROM clientes WHERE data_cadastro = data_consulta;
+    RETURN total;
+END;
+$$;
+
+--Uso da Função
+
+SELECT total_clientes_dia();
