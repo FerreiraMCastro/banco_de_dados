@@ -1,0 +1,22 @@
+--Criando a tabela de vendas SUPONDO que o banco de dados já existe
+
+CREATE TABLE vendas_diarias(
+    id SERIAL PRIMARY KY.
+    prod_nome_id INT NOT NULL,
+    quant_produto FLOAT NOT NULL´
+    data_venda DATE DEFAULT CURRENT_DATE
+);
+
+--CRIANDO A PROCEDURE
+
+CREATE PROCEDURE total_vendas_diaria(quant_produto FLOAT, prod_nome_id INT)
+LANGUAGE 'plpgsql'
+AS $$
+BEGIN 
+    INSERT INTO vendas_diarias(prod_nome_id, quant_produto, data_venda)
+    VALUES (prod_nome_id, quant_produto, CURRENT_DATE);
+END;
+$$;
+
+--REGISTRANDO A VENDA 
+CALL total_vendas_diaria(10,1);
